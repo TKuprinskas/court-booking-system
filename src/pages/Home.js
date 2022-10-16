@@ -101,7 +101,7 @@ const Home = () => {
                     {!login && (
                         <StyledBox>
                             <FacebookLogin
-                                appId="1154706082139619"
+                                appId="512677813681670" // test app id 1154706082139619
                                 autoLoad={false}
                                 fields="name,email,picture"
                                 scope="public_profile,user_friends"

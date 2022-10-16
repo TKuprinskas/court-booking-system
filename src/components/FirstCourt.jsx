@@ -65,6 +65,11 @@ const FirstCourt = () => {
                 bookingDateCheck.getDate();
             return booking.userId === userId && fullBookingDateCheck === fullBookingDate;
         });
+        const twoWeeksInAdvance = new Date();
+        twoWeeksInAdvance.setDate(twoWeeksInAdvance.getDate() + 7);
+        if (slotTime > twoWeeksInAdvance) {
+            return false;
+        }
         if (checkIfBooked || userBookings.length >= 2) {
             return false;
         }
