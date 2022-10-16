@@ -101,12 +101,13 @@ const Home = () => {
                     {!login && (
                         <StyledBox>
                             <FacebookLogin
-                                appId="512677813681670"
+                                appId="1154706082139619"
                                 autoLoad={false}
                                 fields="name,email,picture"
                                 scope="public_profile,user_friends"
                                 callback={responseFacebook}
                                 icon="fa-facebook"
+                                disableMobileRedirect={true}
                             />
                         </StyledBox>
                     )}
