@@ -124,6 +124,7 @@ const Home = () => {
                                     width: 50,
                                     marginTop: 2,
                                     alignSelf: 'center',
+                                    borderRadius: '50%',
                                 }}
                                 alt="facebook profile picture"
                                 src={picture}
