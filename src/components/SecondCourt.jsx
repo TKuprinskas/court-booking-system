@@ -30,6 +30,7 @@ const SecondCourt = () => {
     const [bookedDates, setBookedDates] = useState([]);
     const [userId, setUserId] = useState('');
     const [userName, setUserName] = useState('');
+    const [userEmail, setUserEmail] = useState('');
     const [allBookings, setAllBookings] = useState([]);
 
     useEffect(() => {
@@ -44,6 +45,7 @@ const SecondCourt = () => {
         const user = getUser();
         setUserId(user.userID);
         setUserName(user.name);
+        setUserEmail(user.email);
     }, []);
 
     const timeSlotValidator = (slotTime) => {
@@ -96,6 +98,7 @@ const SecondCourt = () => {
                 courtId: 2,
                 userId: userId,
                 userName: userName,
+                email: userEmail,
                 bookedDate: bookedDate,
             }),
         });
