@@ -6,6 +6,7 @@ import PrivateRoute from './utils/privateRoute';
 const Home = React.lazy(() => import('./pages/Home'));
 const Reservations = React.lazy(() => import('./pages/Reservations'));
 const MyReservations = React.lazy(() => import('./pages/MyReservations'));
+const Rules = React.lazy(() => import('./pages/Rules'));
 
 const TRACKING_ID = 'UA-213425407-1';
 ReactGA.initialize(TRACKING_ID);
@@ -37,6 +38,7 @@ const App = () => {
                                 </PrivateRoute>
                             }
                         />
+                        <Route path="/taisykles" element={<Rules />} />
                     </Routes>
                 </div>
             </div>

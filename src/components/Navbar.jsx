@@ -44,6 +44,7 @@ const drawerWidth = 240;
 const navmenu = [
     { page: 'Rezervuoti', url: '/rezervacijos' },
     { page: 'Mano Rezervacijos', url: '/mano-rezervacijos' },
+    { page: 'Taisyklės', url: '/taisykles' },
 ];
 
 const Navbar = (props) => {
@@ -51,7 +52,6 @@ const Navbar = (props) => {
     const navigate = useNavigate();
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [picture, setPicture] = useState('');
-    const [login, setLogin] = useState(false);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -63,7 +63,6 @@ const Navbar = (props) => {
         const user = getUser();
         if (user.accessToken) {
             setPicture(user.picture.data.url);
-            setLogin(true);
         }
     }, []);
 
@@ -122,61 +121,57 @@ const Navbar = (props) => {
                             <img src={logo} alt="logo" width={60} height={40} />
                         </StyledLink>
                     </Box>
-                    {login && (
-                        <Box sx={{ display: { xs: 'none', sm: 'block', lg: 'flex' }, color: 'primary.main' }}>
-                            {navmenu.map((item, index) => (
-                                <Button key={index} sx={{ color: 'primary.main', marginLeft: '5px' }}>
-                                    {currentPath !== item.url && (
-                                        <StyledLink to={item.url}>
-                                            <ListItemText primary={item.page} />
-                                        </StyledLink>
-                                    )}
-                                    {currentPath === item.url && (
-                                        <ActiveLink to={item.url}>
-                                            <ListItemText primary={item.page} />
-                                        </ActiveLink>
-                                    )}
-                                </Button>
-                            ))}
-                            {picture && (
-                                <Box
-                                    component="img"
-                                    sx={{
-                                        height: 50,
-                                        width: 50,
-                                        borderRadius: '50%',
-                                        marginLeft: '5px',
-                                    }}
-                                    alt="The house from the offer."
-                                    src={picture}
-                                />
-                            )}
-                        </Box>
-                    )}
+                    <Box sx={{ display: { xs: 'none', sm: 'flex' }, color: 'primary.main' }}>
+                        {navmenu.map((item, index) => (
+                            <Button key={index} sx={{ color: 'primary.main', marginLeft: '5px' }}>
+                                {currentPath !== item.url && (
+                                    <StyledLink to={item.url}>
+                                        <ListItemText primary={item.page} />
+                                    </StyledLink>
+                                )}
+                                {currentPath === item.url && (
+                                    <ActiveLink to={item.url}>
+                                        <ListItemText primary={item.page} />
+                                    </ActiveLink>
+                                )}
+                            </Button>
+                        ))}
+                        {picture && (
+                            <Box
+                                component="img"
+                                sx={{
+                                    height: 50,
+                                    width: 50,
+                                    borderRadius: '50%',
+                                    marginLeft: '5px',
+                                }}
+                                alt="The house from the offer."
+                                src={picture}
+                            />
+                        )}
+                    </Box>
                 </Toolbar>
             </StyledAppBar>
             <Box component="nav">
-                {login && (
-                    <Drawer
-                        container={container}
-                        variant="temporary"
-                        open={mobileOpen}
-                        onClose={handleDrawerToggle}
-                        ModalProps={{
-                            keepMounted: true, // Better open performance on mobile.
-                        }}
-                        sx={{
-                            display: { xs: 'block', sm: 'none' },
-                            '& .MuiDrawer-paper': {
-                                boxSizing: 'border-box',
-                                width: drawerWidth,
-                                backgroundColor: '#fff',
-                            },
-                        }}
-                    >
-                        {drawer}
-                    </Drawer>
-                )}
+                <Drawer
+                    container={container}
+                    variant="temporary"
+                    open={mobileOpen}
+                    onClose={handleDrawerToggle}
+                    ModalProps={{
+                        keepMounted: true, // Better open performance on mobile.
+                    }}
+                    sx={{
+                        display: { xs: 'block', sm: 'none' },
+                        '& .MuiDrawer-paper': {
+                            boxSizing: 'border-box',
+                            width: drawerWidth,
+                            backgroundColor: '#fff',
+                        },
+                    }}
+                >
+                    {drawer}
+                </Drawer>
             </Box>
         </Box>
     );
