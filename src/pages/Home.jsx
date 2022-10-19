@@ -104,7 +104,7 @@ const Home = () => {
                                 appId="512677813681670" // test app id 1154706082139619 // prod app id 512677813681670
                                 autoLoad={false}
                                 fields="name,email,picture"
-                                scope="public_profile,user_friends, email"
+                                scope="public_profile,email"
                                 callback={responseFacebook}
                                 icon="fa-facebook"
                                 disableMobileRedirect={true}
@@ -114,7 +114,7 @@ const Home = () => {
 
                     {login && (
                         <StyledBox>
-                            <Typography variant={isMobile ? 'h5' : 'h4'}>
+                            <Typography variant={isMobile ? 'h5' : 'h3'}>
                                 Jūs esate prisijungęs kaip, {data.name}!
                             </Typography>
                             <Box

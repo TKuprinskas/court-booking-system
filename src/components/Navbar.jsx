@@ -45,6 +45,9 @@ const navmenu = [
     { page: 'Rezervuoti', url: '/rezervacijos' },
     { page: 'Mano Rezervacijos', url: '/mano-rezervacijos' },
     { page: 'Taisyklės', url: '/taisykles' },
+    { page: 'Naujienos', url: '/naujienos' },
+    { page: 'Galerija', url: '/galerija' },
+    { page: 'Turnyro Registracija', url: '/turnyro-registracija' },
 ];
 
 const Navbar = (props) => {

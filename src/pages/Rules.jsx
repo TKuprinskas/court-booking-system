@@ -9,7 +9,7 @@ const Rules = () => {
         <>
             <Navbar />
             <Container sx={{ marginTop: '80px' }}>
-                <Typography variant={isMobile ? 'h4' : 'h2'} sx={{ textAlign: 'center' }}>
+                <Typography variant={isMobile ? 'h4' : 'h3'} sx={{ textAlign: 'center' }}>
                     Bendros lauko teniso kortų taisyklės
                 </Typography>
                 <Box sx={{ marginTop: '20px' }}>

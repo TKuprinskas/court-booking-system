@@ -28,7 +28,6 @@ const MyReservations = () => {
     const [bookings, setBookings] = useState([]);
     useEffect(() => {
         const user = getUser();
-
         const getBookedDates = async () => {
             const response = await fetch('https://backend.tenisopartneris.lt/v1/bookcourt');
             const data = await response.json();
@@ -55,7 +54,7 @@ const MyReservations = () => {
         <>
             <Navbar />
             <Container sx={{ marginTop: '80px' }}>
-                <Typography variant={isMobile ? 'h4' : 'h2'} sx={{ textAlign: 'center' }}>
+                <Typography variant={isMobile ? 'h4' : 'h3'} sx={{ textAlign: 'center' }}>
                     Mano rezervacijos
                 </Typography>
                 <Box sx={{ textAlign: 'center', marginTop: '50px' }}>

@@ -11,7 +11,7 @@ const Reservations = () => {
         <>
             <Navbar />
             <Container sx={{ marginTop: '80px' }}>
-                <Typography variant={isMobile ? 'h4' : 'h2'} sx={{ textAlign: 'center' }}>
+                <Typography variant={isMobile ? 'h4' : 'h3'} sx={{ textAlign: 'center' }}>
                     Teniso aikštelių rezervacijos
                 </Typography>
                 <Box
