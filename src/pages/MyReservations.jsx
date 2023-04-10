@@ -50,6 +50,19 @@ const MyReservations = () => {
         }
     };
 
+    // change date to local date and time format
+    const handleDate = (date) => {
+        const newDate = new Date(date);
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+        };
+        return newDate.toLocaleDateString('lt-LT', options);
+    };
+
     return (
         <>
             <Navbar />
@@ -101,7 +114,7 @@ const MyReservations = () => {
                                     variant={isMobile ? 'body1' : 'h5'}
                                     sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}
                                 >
-                                    {booking.date}
+                                    {handleDate(booking.date)}
                                 </Typography>
                                 <Typography
                                     variant={isMobile ? 'body1' : 'h5'}

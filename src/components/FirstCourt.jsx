@@ -89,6 +89,9 @@ const FirstCourt = () => {
             '-' +
             new Date(dateTime).getDate();
 
+        // https://backend.tenisopartneris.lt/v1/bookcourt
+        // http://localhost:8000/v1/bookcourt
+
         const data = await fetch('https://backend.tenisopartneris.lt/v1/bookcourt', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
