@@ -49,7 +49,7 @@ const SecondCourt = () => {
     }, []);
 
     const timeSlotValidator = (slotTime) => {
-        const checkIfBooked = bookedDates.find((booking) => booking.date === slotTime.toLocaleString());
+        const checkIfBooked = bookedDates.find((booking) => booking.date === slotTime.toLocaleString('lt-LT'));
         const userBookings = allBookings.filter((booking) => {
             const fullBookingDate =
                 new Date(slotTime).getFullYear() +
@@ -57,7 +57,7 @@ const SecondCourt = () => {
                 (new Date(slotTime).getMonth() + 1) +
                 '-' +
                 new Date(slotTime).getDate();
-            const bookingDate = booking.bookedDate.toLocaleString().split(',')[0];
+            const bookingDate = booking.bookedDate.toLocaleString('lt-LT').split(',')[0];
             const bookingDateCheck = new Date(bookingDate);
             const fullBookingDateCheck =
                 bookingDateCheck.getFullYear() +
@@ -81,13 +81,12 @@ const SecondCourt = () => {
     const handleScheduled = async (dateTime) => {
         setIsScheduling(true);
         setScheduleErr('');
-        const localeDateTime = dateTime.toLocaleString();
-        const bookedDate =
-            new Date(dateTime).getFullYear() +
-            '-' +
-            (new Date(dateTime).getMonth() + 1) +
-            '-' +
-            new Date(dateTime).getDate();
+
+        const localeDateTime = dateTime.toLocaleString('lt-LT');
+        const bookedDate = localeDateTime.split(' ')[0];
+
+        // https://backend.tenisopartneris.lt/v1/bookcourt
+        // http://localhost:8000/v1/bookcourt
 
         const data = await fetch('https://backend.tenisopartneris.lt/v1/bookcourt', {
             method: 'POST',

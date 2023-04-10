@@ -50,7 +50,6 @@ const MyReservations = () => {
         }
     };
 
-    // change date to local date and time format
     const handleDate = (date) => {
         const newDate = new Date(date);
         const options = {
@@ -100,8 +99,9 @@ const MyReservations = () => {
                         </Typography>
                     </Box>
                     {bookings.length > 0 ? (
-                        bookings.map((booking) => (
+                        bookings.map((booking, index) => (
                             <Box
+                                key={index}
                                 sx={{
                                     display: 'flex',
                                     margin: '5px',
