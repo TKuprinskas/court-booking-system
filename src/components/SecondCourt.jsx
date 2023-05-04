@@ -68,7 +68,7 @@ const SecondCourt = () => {
             return booking.userId === userId && fullBookingDateCheck === fullBookingDate;
         });
         const twoWeeksInAdvance = new Date();
-        twoWeeksInAdvance.setDate(twoWeeksInAdvance.getDate() + 3);
+        twoWeeksInAdvance.setDate(twoWeeksInAdvance.getDate() + 2);
         if (slotTime > twoWeeksInAdvance) {
             return false;
         }
