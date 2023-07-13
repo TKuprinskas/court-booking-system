@@ -94,49 +94,46 @@ const Home = () => {
   };
 
   return (
-    <>
-      <Navbar />
-      <StyledContainer>
-        <Box sx={{ textAlign: 'center', marginTop: '50px' }}>
-          {!login && (
-            <StyledBox>
-              <FacebookLogin
-                appId='512677813681670' // test app id 1154706082139619 // prod app id 512677813681670
-                autoLoad={false}
-                fields='name,email,picture'
-                scope='public_profile,email'
-                callback={responseFacebook}
-                icon='fa-facebook'
-                disableMobileRedirect={true}
-              />
-            </StyledBox>
-          )}
+    <StyledContainer>
+      <Box sx={{ textAlign: 'center', marginTop: '50px' }}>
+        {!login && (
+          <StyledBox>
+            <FacebookLogin
+              appId='512677813681670' // test app id 1154706082139619 // prod app id 512677813681670
+              autoLoad={false}
+              fields='name,email,picture'
+              scope='public_profile,email'
+              callback={responseFacebook}
+              icon='fa-facebook'
+              disableMobileRedirect={true}
+            />
+          </StyledBox>
+        )}
 
-          {login && (
-            <StyledBox>
-              <Typography variant={isMobile ? 'h5' : 'h3'}>
-                Jūs esate prisijungęs kaip, {data.name}!
-              </Typography>
-              <Box
-                component='img'
-                sx={{
-                  height: 50,
-                  width: 50,
-                  marginTop: 2,
-                  alignSelf: 'center',
-                  borderRadius: '50%',
-                }}
-                alt='facebook profile picture'
-                src={picture}
-              />
-              <StyledBoxButton component='button' onClick={handleLogOut}>
-                {logOut}
-              </StyledBoxButton>
-            </StyledBox>
-          )}
-        </Box>
-      </StyledContainer>
-    </>
+        {login && (
+          <StyledBox>
+            <Typography variant={isMobile ? 'h5' : 'h3'}>
+              Jūs esate prisijungęs kaip, {data.name}!
+            </Typography>
+            <Box
+              component='img'
+              sx={{
+                height: 50,
+                width: 50,
+                marginTop: 2,
+                alignSelf: 'center',
+                borderRadius: '50%',
+              }}
+              alt='facebook profile picture'
+              src={picture}
+            />
+            <StyledBoxButton component='button' onClick={handleLogOut}>
+              {logOut}
+            </StyledBoxButton>
+          </StyledBox>
+        )}
+      </Box>
+    </StyledContainer>
   );
 };
 

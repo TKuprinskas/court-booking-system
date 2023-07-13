@@ -80,102 +80,97 @@ const MyReservations = () => {
   };
 
   return (
-    <>
-      <Navbar />
-      <Container sx={{ marginTop: '80px' }} maxWidth='xl'>
-        <Typography
-          variant={isMobile ? 'h4' : 'h3'}
-          sx={{ textAlign: 'center' }}>
-          Mano rezervacijos
-        </Typography>
+    <Container sx={{ marginTop: '80px', height: '100vh' }} maxWidth='xl'>
+      <Typography variant={isMobile ? 'h4' : 'h3'} sx={{ textAlign: 'center' }}>
+        Mano rezervacijos
+      </Typography>
+      <Box
+        sx={{
+          textAlign: 'center',
+          marginTop: '50px',
+        }}>
         <Box
           sx={{
-            textAlign: 'center',
-            marginTop: '50px',
+            display: 'flex',
+            margin: '5px',
+            padding: '5px',
+            justifyContent: 'space-around',
+            borderBottom: '1px solid black',
+            display: isMobile ? 'none' : 'flex',
           }}>
-          <Box
-            sx={{
-              display: 'flex',
-              margin: '5px',
-              padding: '5px',
-              justifyContent: 'space-around',
-              borderBottom: '1px solid black',
-              display: isMobile ? 'none' : 'flex',
-            }}>
-            <Typography
-              variant={isMobile ? 'h5' : 'h4'}
-              sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
-              Data
-            </Typography>
-            <Typography
-              variant={isMobile ? 'h5' : 'h4'}
-              sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
-              Aikštelė
-            </Typography>
-            <Typography
-              variant={isMobile ? 'h5' : 'h4'}
-              sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
-              Įėjimo kodas
-            </Typography>
-            <Typography
-              variant={isMobile ? 'h5' : 'h4'}
-              sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
-              Atšaukti
-            </Typography>
-          </Box>
-          {bookings.length > 0 ? (
-            bookings.map((booking, index) => (
-              <Box
-                key={index}
+          <Typography
+            variant={isMobile ? 'h5' : 'h4'}
+            sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
+            Data
+          </Typography>
+          <Typography
+            variant={isMobile ? 'h5' : 'h4'}
+            sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
+            Aikštelė
+          </Typography>
+          <Typography
+            variant={isMobile ? 'h5' : 'h4'}
+            sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
+            Įėjimo kodas
+          </Typography>
+          <Typography
+            variant={isMobile ? 'h5' : 'h4'}
+            sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
+            Atšaukti
+          </Typography>
+        </Box>
+        {bookings.length > 0 ? (
+          bookings.map((booking, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: 'flex',
+                margin: '5px',
+                padding: '5px',
+                justifyContent: 'space-around',
+                borderBottom: '1px solid lightgray',
+                flexDirection: isMobile ? 'column' : 'row',
+              }}>
+              <Typography
+                variant={isMobile ? 'body1' : 'h5'}
+                sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
+                {handleDate(booking.date)}
+              </Typography>
+              <Typography
+                variant={isMobile ? 'body1' : 'h5'}
                 sx={{
                   display: 'flex',
-                  margin: '5px',
-                  padding: '5px',
-                  justifyContent: 'space-around',
-                  borderBottom: '1px solid lightgray',
-                  flexDirection: isMobile ? 'column' : 'row',
+                  flex: '1',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
-                <Typography
-                  variant={isMobile ? 'body1' : 'h5'}
-                  sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
-                  {handleDate(booking.date)}
-                </Typography>
-                <Typography
-                  variant={isMobile ? 'body1' : 'h5'}
-                  sx={{
-                    display: 'flex',
-                    flex: '1',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  {booking.courtId} aikštelė
-                </Typography>
-                <Typography
-                  variant={isMobile ? 'body1' : 'h5'}
-                  sx={{
-                    display: 'flex',
-                    flex: '1',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  {adminInfo && adminInfo.access_code}
-                </Typography>
-                <Box
-                  sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
-                  <StyledButton onClick={() => handleCancel(booking.id)}>
-                    ATŠAUKTI
-                  </StyledButton>
-                </Box>
+                {booking.courtId} aikštelė
+              </Typography>
+              <Typography
+                variant={isMobile ? 'body1' : 'h5'}
+                sx={{
+                  display: 'flex',
+                  flex: '1',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                {adminInfo && adminInfo.access_code}
+              </Typography>
+              <Box
+                sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
+                <StyledButton onClick={() => handleCancel(booking.id)}>
+                  ATŠAUKTI
+                </StyledButton>
               </Box>
-            ))
-          ) : (
-            <Typography variant={isMobile ? 'h5' : 'h4'}>
-              Jūs neturite aktyvių rezervacijų
-            </Typography>
-          )}
-        </Box>
-      </Container>
-    </>
+            </Box>
+          ))
+        ) : (
+          <Typography variant={isMobile ? 'h5' : 'h4'}>
+            Jūs neturite aktyvių rezervacijų
+          </Typography>
+        )}
+      </Box>
+    </Container>
   );
 };
 
