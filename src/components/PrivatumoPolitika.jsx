@@ -180,11 +180,12 @@ const PrivatumoPolitika = () => {
           patobulintas, Lankytojui pritaikytas funkcijas).
         </p>
         <br />
-        <h4>4. LANKYTOJO INFORMACIJOS KEITIMAS</h4>
+        <h4>4. LANKYTOJO INFORMACIJOS ŠALINIMAS</h4>
         <p>
-          4.1. Lankytojas gali bet kuriuo metu koreguoti, pildyti ar
-          pareikalauti panaikinti savo Registraciją interneto svetainėje, apie
-          tai informuodamas raštu &nbsp;
+          4.1. Lankytojas gali bet kuriuo metu paprašyti panaikinti savo
+          paskyrą, ir visą saugomą apie jį informaciją (vardas, pavardė,
+          el.paštas). Norint tai padaryti, reikia apie tai informuoti parašydami
+          el. laišką adresu &nbsp;
           <a href='mailto:info@tenisopartneris.lt'>info@tenisopartneris.lt</a>
         </p>
         <br />

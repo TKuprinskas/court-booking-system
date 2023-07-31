@@ -5,6 +5,7 @@ import { Container, Box, useMediaQuery } from '@mui/material';
 import { getUser } from '../utils/helpers';
 import kortas1 from '../assets/images/kortas1.jpg';
 import styled from 'styled-components';
+import ReservationTable from './ReservationsTable';
 
 const PickerContainer = styled(Box)`
   width: 475px;
@@ -102,6 +103,16 @@ const FirstCourt = () => {
     const localeDateTime = dateTime.toLocaleString('lt-LT');
     const bookedDate = localeDateTime.split(' ')[0];
 
+    // Check if the court is available at the selected time
+    const isAvailable = timeSlotValidator(dateTime);
+    if (!isAvailable) {
+      setScheduleErr(
+        'Rezervacija nesėkminga, kažkas kitas katik užrezervavo šį laiką.'
+      );
+      setIsScheduling(false);
+      return;
+    }
+
     // https://backend.tenisopartneris.lt/v1/bookcourt
     // http://localhost:8000/v1/bookcourt
 
@@ -124,16 +135,19 @@ const FirstCourt = () => {
     );
 
     const res = await data.json();
-    if (res) {
+    if (res.message) {
+      setScheduleErr(res.message);
+      setIsScheduling(false);
+      return;
+    }
+    if (res[0].affectedRows >= 1) {
       setTimeout(() => {
         setIsScheduled(true);
         setIsScheduling(false);
       }, 1000);
       setTimeout(() => {
         navigate('/mano-rezervacijos');
-      }, 2000);
-    } else {
-      setScheduleErr(res.message);
+      }, 3000);
     }
   };
 
@@ -164,6 +178,7 @@ const FirstCourt = () => {
           loadingText='Rezervuojama...'
         />
       </PickerContainer>
+      <ReservationTable reservations={bookedDates} />
     </Container>
   );
 };
