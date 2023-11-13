@@ -10,19 +10,19 @@ export default function Footer() {
         display: 'flex',
         justifyContent: 'space-between',
       }}
-      component='footer'>
+      component='footer'
+    >
       <Typography variant='body2' color='text.secondary' align='center'>
-        <Link
-          href='/privacy-policy'
-          color='inherit'
-          underline='hover'
-          target='_blank'>
+        <Link href='/privacy-policy' color='inherit' underline='hover' target='_blank'>
           Privatumo politika
         </Link>
       </Typography>
       <Typography variant='body2' color='text.secondary' align='center'>
         {'© '}
-        {new Date().getFullYear()} Teniso Partneris
+        {new Date().getFullYear()}{' '}
+        <Link color='inherit' href='https://tkuprinskas.lt/' target='_blank'>
+          tkuprinskas.lt
+        </Link>
       </Typography>
     </Box>
   );
