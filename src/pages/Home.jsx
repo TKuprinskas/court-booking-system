@@ -112,9 +112,7 @@ const Home = () => {
 
         {login && (
           <StyledBox>
-            <Typography variant={isMobile ? 'h5' : 'h3'}>
-              Jūs esate prisijungęs kaip, {data.name}!
-            </Typography>
+            <Typography variant={isMobile ? 'h5' : 'h3'}>Jūs esate prisijungęs kaip, {data.name}!</Typography>
             <Box
               component='img'
               sx={{
