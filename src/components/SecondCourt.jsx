@@ -37,18 +37,14 @@ const SecondCourt = () => {
 
   useEffect(() => {
     const getBookedDates = async () => {
-      const response = await fetch(
-        'https://backend.tenisopartneris.lt/v1/bookcourt'
-      );
+      const response = await fetch('https://backend.tenisopartneris.lt/v1/bookcourt');
       const data = await response.json();
       const filteredData = data.filter((booking) => booking.courtId === 2);
       setBookedDates(filteredData);
       setAllBookings(data);
     };
     const getAdminInfo = async () => {
-      const response = await fetch(
-        'https://backend.tenisopartneris.lt/v1/bookcourtadmin'
-      );
+      const response = await fetch('https://backend.tenisopartneris.lt/v1/bookcourtadmin');
       const data = await response.json();
       setAdminInfo(data[0]);
     };
@@ -61,29 +57,13 @@ const SecondCourt = () => {
   }, []);
 
   const timeSlotValidator = (slotTime) => {
-    const checkIfBooked = bookedDates.find(
-      (booking) => booking.date === slotTime.toLocaleString('lt-LT')
-    );
+    const checkIfBooked = bookedDates.find((booking) => booking.date === slotTime.toLocaleString('lt-LT'));
     const userBookings = allBookings.filter((booking) => {
-      const fullBookingDate =
-        new Date(slotTime).getFullYear() +
-        '-' +
-        (new Date(slotTime).getMonth() + 1) +
-        '-' +
-        new Date(slotTime).getDate();
-      const bookingDate = booking.bookedDate
-        .toLocaleString('lt-LT')
-        .split(',')[0];
+      const fullBookingDate = new Date(slotTime).getFullYear() + '-' + (new Date(slotTime).getMonth() + 1) + '-' + new Date(slotTime).getDate();
+      const bookingDate = booking.bookedDate.toLocaleString('lt-LT').split(',')[0];
       const bookingDateCheck = new Date(bookingDate);
-      const fullBookingDateCheck =
-        bookingDateCheck.getFullYear() +
-        '-' +
-        (bookingDateCheck.getMonth() + 1) +
-        '-' +
-        bookingDateCheck.getDate();
-      return (
-        booking.userId === userId && fullBookingDateCheck === fullBookingDate
-      );
+      const fullBookingDateCheck = bookingDateCheck.getFullYear() + '-' + (bookingDateCheck.getMonth() + 1) + '-' + bookingDateCheck.getDate();
+      return booking.userId === userId && fullBookingDateCheck === fullBookingDate;
     });
     const twoWeeksInAdvance = new Date();
     twoWeeksInAdvance.setDate(twoWeeksInAdvance.getDate() + 2);
@@ -106,9 +86,7 @@ const SecondCourt = () => {
     // Check if the court is available at the selected time
     const isAvailable = timeSlotValidator(dateTime);
     if (!isAvailable) {
-      setScheduleErr(
-        'Rezervacija nesėkminga, kažkas kitas katik užrezervavo šį laiką.'
-      );
+      setScheduleErr('Rezervacija nesėkminga, kažkas kitas katik užrezervavo šį laiką.');
       setIsScheduling(false);
       return;
     }
@@ -116,23 +94,20 @@ const SecondCourt = () => {
     // https://backend.tenisopartneris.lt/v1/bookcourt
     // http://localhost:8000/v1/bookcourt
 
-    const data = await fetch(
-      'https://backend.tenisopartneris.lt/v1/bookcourt',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          localeDateTime,
-          duration: 1,
-          courtId: 2,
-          userId: userId,
-          userName: userName,
-          email: userEmail,
-          bookedDate: bookedDate,
-          accessCode: adminInfo.access_code,
-        }),
-      }
-    );
+    const data = await fetch('https://backend.tenisopartneris.lt/v1/bookcourt', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        localeDateTime,
+        duration: 1,
+        courtId: 2,
+        userId: userId,
+        userName: userName,
+        email: userEmail,
+        bookedDate: bookedDate,
+        accessCode: adminInfo.access_code,
+      }),
+    });
 
     const res = await data.json();
     if (res.message) {

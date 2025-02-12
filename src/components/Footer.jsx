@@ -20,9 +20,9 @@ export default function Footer() {
       <Typography variant='body2' color='text.secondary' align='center'>
         {'© '}
         {new Date().getFullYear()}{' '}
-        <Link color='inherit' href='https://tkuprinskas.lt/' target='_blank'>
+        <a href='https://tkuprinskas.lt/' target='_blank' rel='noopener noreferrer' style={{ color: 'inherit', textDecoration: 'none' }}>
           tkuprinskas.lt
-        </Link>
+        </a>
       </Typography>
     </Box>
   );
