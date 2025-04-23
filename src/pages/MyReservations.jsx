@@ -31,19 +31,13 @@ const MyReservations = () => {
   useEffect(() => {
     const user = getUser();
     const getBookedDates = async () => {
-      const response = await fetch(
-        'https://backend.tenisopartneris.lt/v1/bookcourt'
-      );
+      const response = await fetch('https://backend.tenisopartneris.lt/v1/bookcourt');
       const data = await response.json();
-      const filteredData = data
-        .sort((a, b) => b.date - a.date)
-        .filter((booking) => booking.userId === user.userID);
+      const filteredData = data.sort((a, b) => b.date - a.date).filter((booking) => booking.userId === user.userID);
       setBookings(filteredData);
     };
     const getAdminInfo = async () => {
-      const response = await fetch(
-        'https://backend.tenisopartneris.lt/v1/bookcourtadmin'
-      );
+      const response = await fetch('https://backend.tenisopartneris.lt/v1/bookcourtadmin');
       const data = await response.json();
       setAdminInfo(data[0]);
     };
@@ -52,17 +46,15 @@ const MyReservations = () => {
   }, []);
 
   const handleCancel = async (bookingId) => {
-    const response = await fetch(
-      `https://backend.tenisopartneris.lt/v1/bookcourt/${bookingId}`,
-      {
-        method: 'DELETE',
-      }
-    );
+    const confirmCancel = window.confirm('Ar tikrai norite atšaukti šią rezervaciją?');
+    if (!confirmCancel) return;
+
+    const response = await fetch(`https://backend.tenisopartneris.lt/v1/bookcourt/${bookingId}`, {
+      method: 'DELETE',
+    });
     const data = await response.json();
     if (data) {
-      const updatedBookings = bookings.filter(
-        (booking) => booking.id !== bookingId
-      );
+      const updatedBookings = bookings.filter((booking) => booking.id !== bookingId);
       setBookings(updatedBookings);
     }
   };
@@ -88,7 +80,13 @@ const MyReservations = () => {
         sx={{
           textAlign: 'center',
           marginTop: '50px',
-        }}>
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          border: '1px solid lightgray',
+          borderRadius: '8px',
+          padding: '10px',
+        }}
+      >
         <Box
           sx={{
             display: 'flex',
@@ -97,25 +95,15 @@ const MyReservations = () => {
             justifyContent: 'space-around',
             borderBottom: '1px solid black',
             display: isMobile ? 'none' : 'flex',
-          }}>
-          <Typography
-            variant={isMobile ? 'h5' : 'h4'}
-            sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
+          }}
+        >
+          <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
             Data
           </Typography>
-          <Typography
-            variant={isMobile ? 'h5' : 'h4'}
-            sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
+          <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
             Aikštelė
           </Typography>
-          <Typography
-            variant={isMobile ? 'h5' : 'h4'}
-            sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
-            Įėjimo kodas
-          </Typography>
-          <Typography
-            variant={isMobile ? 'h5' : 'h4'}
-            sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
+          <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
             Atšaukti
           </Typography>
         </Box>
@@ -130,10 +118,9 @@ const MyReservations = () => {
                 justifyContent: 'space-around',
                 borderBottom: '1px solid lightgray',
                 flexDirection: isMobile ? 'column' : 'row',
-              }}>
-              <Typography
-                variant={isMobile ? 'body1' : 'h5'}
-                sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
+              }}
+            >
+              <Typography variant={isMobile ? 'body1' : 'h5'} sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
                 {handleDate(booking.date)}
               </Typography>
               <Typography
@@ -143,31 +130,17 @@ const MyReservations = () => {
                   flex: '1',
                   justifyContent: 'center',
                   alignItems: 'center',
-                }}>
+                }}
+              >
                 {booking.courtId} aikštelė
               </Typography>
-              <Typography
-                variant={isMobile ? 'body1' : 'h5'}
-                sx={{
-                  display: 'flex',
-                  flex: '1',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                {adminInfo && adminInfo.access_code}
-              </Typography>
-              <Box
-                sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
-                <StyledButton onClick={() => handleCancel(booking.id)}>
-                  ATŠAUKTI
-                </StyledButton>
+              <Box sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
+                <StyledButton onClick={() => handleCancel(booking.id)}>ATŠAUKTI</StyledButton>
               </Box>
             </Box>
           ))
         ) : (
-          <Typography variant={isMobile ? 'h5' : 'h4'}>
-            Jūs neturite aktyvių rezervacijų
-          </Typography>
+          <Typography variant={isMobile ? 'h5' : 'h4'}>Jūs neturite aktyvių rezervacijų</Typography>
         )}
       </Box>
     </Container>

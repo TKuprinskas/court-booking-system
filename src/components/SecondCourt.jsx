@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DayTimePicker from '@mooncake-dev/react-day-time-picker';
-import { Container, Box, useMediaQuery } from '@mui/material';
+import { Container, Box, useMediaQuery, Typography, Button } from '@mui/material';
 import { getUser } from '../utils/helpers';
 import kortas2 from '../assets/images/kortas2.jpg';
 import styled from 'styled-components';
@@ -24,6 +24,7 @@ const PickerContainer = styled(Box)`
 
 const SecondCourt = () => {
   const navigate = useNavigate();
+  const user = getUser();
   const isMobile = useMediaQuery('(max-width: 600px)');
   const [isScheduling, setIsScheduling] = useState(false);
   const [isScheduled, setIsScheduled] = useState(false);
@@ -34,29 +35,44 @@ const SecondCourt = () => {
   const [userEmail, setUserEmail] = useState('');
   const [allBookings, setAllBookings] = useState([]);
   const [adminInfo, setAdminInfo] = useState();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const getBookedDates = async () => {
-      const response = await fetch('https://backend.tenisopartneris.lt/v1/bookcourt');
-      const data = await response.json();
-      const filteredData = data.filter((booking) => booking.courtId === 2);
-      setBookedDates(filteredData);
-      setAllBookings(data);
-    };
-    const getAdminInfo = async () => {
-      const response = await fetch('https://backend.tenisopartneris.lt/v1/bookcourtadmin');
-      const data = await response.json();
-      setAdminInfo(data[0]);
-    };
+    if (user && adminInfo) {
+      setIsAdmin(user.id === adminInfo.admin_id);
+    }
+  }, [user, adminInfo]);
+
+  const getBookedDates = async () => {
+    const response = await fetch('https://backend.tenisopartneris.lt/v1/bookcourt');
+    const data = await response.json();
+    const filteredData = data.filter((booking) => booking.courtId === 2);
+    setBookedDates(filteredData);
+    setAllBookings(data);
+  };
+
+  const getAdminInfo = async () => {
+    const response = await fetch('https://backend.tenisopartneris.lt/v1/bookcourtadmin');
+    const data = await response.json();
+    setAdminInfo(data[0]);
+  };
+
+  useEffect(() => {
     getAdminInfo();
     getBookedDates();
-    const user = getUser();
     setUserId(user.userID);
     setUserName(user.name);
     setUserEmail(user.email);
-  }, []);
+  }, [user.userID, user.name, user.email]);
 
   const timeSlotValidator = (slotTime) => {
+    // If the user is an admin, only check if the slot is already booked
+    if (isAdmin) {
+      const checkIfBooked = bookedDates.find((booking) => booking.date === slotTime.toLocaleString('lt-LT'));
+      return !checkIfBooked; // Return true if the slot is not booked
+    }
+
+    // For regular users, apply all restrictions
     const checkIfBooked = bookedDates.find((booking) => booking.date === slotTime.toLocaleString('lt-LT'));
     const userBookings = allBookings.filter((booking) => {
       const fullBookingDate = new Date(slotTime).getFullYear() + '-' + (new Date(slotTime).getMonth() + 1) + '-' + new Date(slotTime).getDate();
@@ -105,7 +121,6 @@ const SecondCourt = () => {
         userName: userName,
         email: userEmail,
         bookedDate: bookedDate,
-        accessCode: adminInfo.access_code,
       }),
     });
 
@@ -117,12 +132,12 @@ const SecondCourt = () => {
     }
     if (res[0].affectedRows >= 1) {
       setTimeout(() => {
+        setScheduleErr('');
+        getAdminInfo();
+        getBookedDates();
         setIsScheduled(true);
         setIsScheduling(false);
       }, 1000);
-      setTimeout(() => {
-        navigate('/mano-rezervacijos');
-      }, 3000);
     }
   };
 
@@ -141,17 +156,33 @@ const SecondCourt = () => {
         src={kortas2}
       />
       <PickerContainer>
-        <DayTimePicker
-          timeSlotSizeMinutes={60}
-          onConfirm={handleScheduled}
-          timeSlotValidator={timeSlotValidator}
-          isLoading={isScheduling}
-          isDone={isScheduled}
-          err={scheduleErr}
-          confirmText='Rezervuoti'
-          doneText='Rezervacija sėkminga'
-          loadingText='Rezervuojama...'
-        />
+        {!isScheduled ? (
+          <DayTimePicker
+            timeSlotSizeMinutes={60}
+            onConfirm={handleScheduled}
+            timeSlotValidator={timeSlotValidator}
+            isLoading={isScheduling}
+            isDone={isScheduled}
+            err={scheduleErr}
+            confirmText='Rezervuoti'
+            doneText='Rezervacija sėkminga'
+            loadingText='Rezervuojama...'
+          />
+        ) : (
+          <Box textAlign='center'>
+            <Typography variant='h6' color='success.main' gutterBottom>
+              Rezervacija sėkminga!
+            </Typography>
+            <Box display='flex' justifyContent='center' gap={2} mt={2}>
+              <Button variant='contained' color='primary' onClick={() => setIsScheduled(false)}>
+                Rezervuoti dar kartą
+              </Button>
+              <Button variant='outlined' color='secondary' onClick={() => navigate('/mano-rezervacijos')}>
+                Eiti į mano rezervacijas
+              </Button>
+            </Box>
+          </Box>
+        )}
       </PickerContainer>
       <ReservationTable reservations={bookedDates} />
     </Container>

@@ -3,14 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik, Field, useField } from 'formik';
 import Select from 'react-select';
 import styled from 'styled-components';
-import {
-  Container,
-  Button,
-  TextField,
-  MenuItem,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Container, Button, TextField, MenuItem, Typography, useMediaQuery } from '@mui/material';
 import { getUser, TournamentLevel } from '../utils/helpers';
 import Navbar from '../components/Navbar';
 
@@ -45,7 +38,6 @@ const TourRegister = () => {
 
   const onSubmitHandler = async (values) => {
     // await tournamentRegisterAsync(values);
-    console.log(values);
     // setSubmitting(false);
     // setTimeout(() => {
     //     navigate('/');
@@ -84,9 +76,7 @@ const TourRegister = () => {
   } else {
     return (
       <Container sx={{ marginTop: '80px' }}>
-        <Typography
-          variant={isMobile ? 'h4' : 'h3'}
-          sx={{ textAlign: 'center', marginBottom: '50px' }}>
+        <Typography variant={isMobile ? 'h4' : 'h3'} sx={{ textAlign: 'center', marginBottom: '50px' }}>
           Registracija į turnyrą
         </Typography>
         <form onSubmit={formik.handleSubmit}>
@@ -100,16 +90,7 @@ const TourRegister = () => {
             margin='normal'
             disabled
           />
-          <TextField
-            fullWidth
-            name='email'
-            id='email'
-            label='El.paštas'
-            value={formik.values.email}
-            variant='outlined'
-            margin='normal'
-            disabled
-          />
+          <TextField fullWidth name='email' id='email' label='El.paštas' value={formik.values.email} variant='outlined' margin='normal' disabled />
           {/* <S.SelectWrapper>
                                     <S.Label>Turnyras</S.Label>
                                     <FormSelect
@@ -134,7 +115,8 @@ const TourRegister = () => {
             value={formik.values.tournament_level}
             onChange={formik.handleChange}
             fullWidth
-            select>
+            select
+          >
             {TournamentLevel.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
