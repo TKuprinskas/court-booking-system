@@ -38,8 +38,8 @@ const FirstCourt = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    if (user && adminInfo) {
-      setIsAdmin(user.id === adminInfo.admin_id);
+    if (user && Array.isArray(adminInfo) && adminInfo.length > 0) {
+      setIsAdmin(adminInfo.some((admin) => admin.admin_id === user.id));
     }
   }, [user, adminInfo]);
 
@@ -54,7 +54,7 @@ const FirstCourt = () => {
   const getAdminInfo = async () => {
     const response = await fetch('https://backend.tenisopartneris.lt/v1/bookcourtadmin');
     const data = await response.json();
-    setAdminInfo(data[0]);
+    setAdminInfo(data);
   };
 
   useEffect(() => {
